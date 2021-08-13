@@ -7,7 +7,6 @@ use std::sync::Arc;
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub enum Message {
-    CancelJob(usize),
     NewJob(Job),
     Terminate
 }
@@ -60,11 +59,6 @@ impl Worker {
                     println!("Worker {} was told to terminate.", id);
 
                     break;
-                }
-                Message::CancelJob(job_id) => {
-                    if job_id == id {
-                        continue;
-                    }
                 }
             }
         });
